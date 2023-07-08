@@ -13,15 +13,16 @@ const StyledButton = styled(Button)<ButtonProps>(({ theme }) => ({
   },
 }));
 
-function DropdownButton(
-  props: Omit<ButtonProps, "variant"> & { isGhost?: boolean }
-) {
+function DropdownButton({
+  isGhost,
+  ...props
+}: Omit<ButtonProps, "variant" | "endIcon"> & { isGhost?: boolean }) {
   return (
     <StyledButton
-      variant={!props.isGhost ? "outlined" : "text"}
+      variant={!isGhost ? "outlined" : "text"}
       endIcon={<KeyboardArrowDownIcon />}
       sx={{
-        border: !props.isGhost ? "1px solid primary.main" : "none",
+        border: !isGhost ? "1px solid primary.main" : "none",
       }}
       {...props}
     />

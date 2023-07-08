@@ -3,20 +3,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import { brandArr, categoryArr, clientsArr } from "utils/api";
 
-interface ISetData {
-  index: number;
-  id: string;
-  createdAt: string;
-  name: string;
-  clientName: string;
-  isArchived: boolean;
-  category: string;
-  address: string;
-  nextAvailable: string;
-  updatedAt: string;
-  brandName: string;
-}
-
 const sets: ISetData[] = [];
 
 const randomValue = (arr: string[]) => {
@@ -28,24 +14,20 @@ const randomValue = (arr: string[]) => {
 for (let i = 0; i < 100; i++) {
   const record = {
     index: i,
-    id: faker.datatype.uuid(),
+    id: faker.string.uuid(),
     createdAt: faker.date.past().toISOString(),
     name: faker.commerce.productName(),
     clientName: randomValue(clientsArr),
     isArchived: faker.datatype.boolean(),
     category: randomValue(categoryArr),
-    address: faker.address.streetAddress(),
+    address: faker.location.streetAddress(),
     nextAvailable: faker.date.future().toISOString(),
     updatedAt: faker.date.past().toISOString(),
     brandName: randomValue(brandArr),
+    color: faker.color.rgb(),
   };
 
   sets.push(record);
-}
-
-interface IGetSetsResponse {
-  items: ISetData[];
-  total: number;
 }
 
 export default function handler(

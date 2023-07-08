@@ -5,6 +5,7 @@ const ButtonStyled = styled(Button)<ButtonProps>(() => ({
   borderRadius: 9999,
   padding: "0.5rem 1.5rem",
   boxShadow: "none",
+  height: "2rem",
   ":hover": {
     boxShadow: "none",
   },
