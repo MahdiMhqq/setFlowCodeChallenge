@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { ParsedUrlQuery } from "querystring";
+import { encode } from "querystring";
 
 export const categoryArr = [
   "on Model",
@@ -16,16 +17,25 @@ export const sortByArr = [
   "Recently Created",
 ];
 
-export function getSets(queries: ParsedUrlQuery | undefined) {
-  // const searchParams = new URLSearchParams(queries);
-  
-  // console.log("getSets", { searchParams });
+export function getSets(queries: ParsedUrlQuery) {
+  const urlQueryString = encode(queries);
 
   const setResponse = axios
     .get<any, AxiosResponse<IGetSetsResponse, any>>(
-      "http://localhost:3000/api/getSets"
+      "http://localhost:3000/api/getSets" +
+        (urlQueryString ? `?${urlQueryString}` : "")
     )
     .then((res) => res.data);
 
   return setResponse;
+}
+
+export function getSetsReqSettings() {
+  const setsSettings = axios
+    .get<any, AxiosResponse<IGetSetsReqSettingsResponse, any>>(
+      "http://localhost:3000/api/getSetsReqSettings"
+    )
+    .then((res) => res.data);
+
+  return setsSettings;
 }

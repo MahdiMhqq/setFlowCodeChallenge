@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useCallback, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface IFiltersObjectSchema {
   [Key: string]: string | boolean | number | undefined;
@@ -27,20 +27,21 @@ function useFilters<T extends IFiltersObjectSchema>(initialValue: T) {
   //PARTIAL SETTER
   const setFiltersOutput = (filters: Partial<T>) => {
     const validFilters = onlyValidFilters({ ...router.query, ...filters });
+
     router.replace({
       pathname: router.pathname,
       query: validFilters,
     });
+
     setFilters((prev) => ({ ...prev, ...filters }));
   };
 
-  //STABLE
-  const setFiltersOutputStable = useCallback(
-    (filters: Partial<T>) => setFiltersOutput(filters),
-    []
-  );
+  //LIFE CYCLE HOOKS
+  useEffect(() => {
+    setFiltersOutput({...initialValue, ...router.query});
+  }, []);
 
-  return [filters, setFiltersOutputStable] as const;
+  return [filters, setFiltersOutput] as const;
 }
 
 export default useFilters;

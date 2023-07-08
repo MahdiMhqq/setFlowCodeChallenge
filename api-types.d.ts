@@ -17,3 +17,8 @@ declare interface IGetSetsResponse {
   items: ISetData[];
   total: number;
 }
+
+declare interface IGetSetsReqSettingsResponse {
+  categories: string[];
+  brandOrClients: string[];
+}

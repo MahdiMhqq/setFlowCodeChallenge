@@ -46,12 +46,12 @@ const prepareResponse = (
     [key: string]: string | string[];
   }>
 ) => {
-  const { offset, order, isArchived, category, brandOrClientName, sort } =
-    queries;
+  const { page, isArchived, category, clientOrBrand, sortBy } = queries;
   let data: ISetData[] = sets;
   let internalOffset = 0;
   let internalOrder = 10;
   let totalCount = 0;
+  const fixedCount = 10;
 
   if (isArchived && isArchived === "true") {
     data = data.filter((set) => set.isArchived);
@@ -60,29 +60,25 @@ const prepareResponse = (
     const firstCategory = typeof category === "string" ? category : category[0];
     data = data.filter((set) => set.category === firstCategory);
   }
-  if (brandOrClientName) {
-    const firstBrandOrClientName =
-      typeof brandOrClientName === "string"
-        ? brandOrClientName
-        : brandOrClientName[0];
+  if (clientOrBrand) {
+    const firstClientOrBrand =
+      typeof clientOrBrand === "string" ? clientOrBrand : clientOrBrand[0];
     data = data.filter(
       (set) =>
-        set.brandName === firstBrandOrClientName ||
-        set.clientName === firstBrandOrClientName
+        set.brandName === firstClientOrBrand ||
+        set.clientName === firstClientOrBrand
     );
   }
-  if (offset && !isNaN(Number(offset))) {
-    internalOffset = Number(offset);
-  }
-  if (order && !isNaN(Number(order))) {
-    internalOrder = Number(order);
+  if (page && !isNaN(Number(page))) {
+    internalOffset = Number(page) * fixedCount;
+    internalOrder = Number(fixedCount);
   }
 
   totalCount = data.length;
-  data = data.slice(internalOffset, internalOrder);
+  data = data.slice(internalOffset, internalOffset + internalOrder);
 
-  if (sort && typeof sort === "string") {
-    switch (sort) {
+  if (sortBy && typeof sortBy === "string") {
+    switch (sortBy) {
       case "recentlyActive":
         data.sort(
           (a, b) =>

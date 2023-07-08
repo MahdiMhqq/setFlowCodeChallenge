@@ -3,22 +3,24 @@ import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Container from "@mui/material/Container";
 import HomePage from "components/pages/Home";
 
-import { getSets } from "utils/api";
+import { getSets, getSetsReqSettings } from "utils/api";
 
 export default function Home(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
   return (
     <Container maxWidth="lg">
-      <HomePage sets={props.setResponse.items} />
+      <HomePage {...props} />
     </Container>
   );
 }
 
 export const getServerSideProps: GetServerSideProps<{
-  setResponse: IGetSetsResponse;
+  setsResponse: IGetSetsResponse;
+  setsSettings: IGetSetsReqSettingsResponse;
 }> = async (ctx) => {
-  const setResponse = await getSets(ctx.params);
+  const setsResponse = await getSets(ctx.query);
+  const setsSettings = await getSetsReqSettings();
 
-  return { props: { setResponse } };
+  return { props: { setsResponse, setsSettings } };
 };

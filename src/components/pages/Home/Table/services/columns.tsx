@@ -63,6 +63,7 @@ const columns = [
         Set Name
       </Typography>
     ),
+    size: 15
   }),
   columnHelper.accessor("category", {
     cell: (info) => (
@@ -97,6 +98,7 @@ const columns = [
         Category
       </Typography>
     ),
+    size: 25
   }),
   columnHelper.accessor("address", {
     cell: (info) => (
@@ -131,6 +133,7 @@ const columns = [
         Address
       </Typography>
     ),
+    size: 30
   }),
   columnHelper.accessor("nextAvailable", {
     cell: (info) => <NextAvailableComponent info={info} />,
@@ -148,6 +151,7 @@ const columns = [
         Next Availability
       </Typography>
     ),
+    size: 25
   }),
   columnHelper.accessor("id", {
     cell: (info) => (
@@ -183,6 +187,7 @@ const columns = [
         Action
       </Typography>
     ),
+    size: 5
   }),
 ];
 

@@ -9,8 +9,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 
 //TANSTACK QUERY
-// import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 // MUI THEME IMPORTS
 import theme from "../theme";
@@ -24,7 +24,7 @@ export interface MyAppProps extends AppProps {
 }
 
 // TANSTACK query
-// const queryClient = new QueryClient();
+const queryClient = new QueryClient();
 
 export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
@@ -36,10 +36,10 @@ export default function MyApp(props: MyAppProps) {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        {/* <QueryClientProvider client={queryClient}>
-          <ReactQueryDevtools initialIsOpen={false} /> */}
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={false} />
           <Component {...pageProps} />
-        {/* </QueryClientProvider> */}
+        </QueryClientProvider>
       </ThemeProvider>
     </CacheProvider>
   );

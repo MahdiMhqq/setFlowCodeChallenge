@@ -1,23 +1,26 @@
-import React from "react";
 import { Box, Typography, Divider } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+
 import BlackTabs from "components/UI/Styled/BlackTabs";
 import CTAButton from "components/UI/Styled/CTAButton";
 import Dropdown from "components/UI/Dropdown";
-import { brandArr, categoryArr, clientsArr, sortByArr } from "utils/api";
+
+import { sortByArr } from "utils/api";
 
 import type { FiltersType } from "..";
 
 interface IHeaderProps {
   filters: FiltersType;
   setFilters: (filters: Partial<FiltersType>) => void;
+  setsSettings: IGetSetsReqSettingsResponse;
 }
 
-const categoryArrDropdown = ["All", ...categoryArr];
-const brandsAndClientsArrDropdown = ["All", ...brandArr, ...clientsArr];
-const sortByArrDropdown = [...sortByArr];
+function Header({ filters, setFilters, setsSettings }: IHeaderProps) {
+  //VARIABLES
+  const categoryArrDropdown = ["All", ...setsSettings.categories];
+  const brandsAndClientsArrDropdown = ["All", ...setsSettings.brandOrClients];
+  const sortByArrDropdown = [...sortByArr];
 
-function Header({ filters, setFilters }: IHeaderProps) {
   //LOGIC
   ////// Category
   const categoryActive = (filters: FiltersType) => {
@@ -67,10 +70,9 @@ function Header({ filters, setFilters }: IHeaderProps) {
       >
         <BlackTabs
           value={!!filters?.isArchived ? 1 : 0}
-          onChange={(_e, index) => {
-            console.log(index);
-            setFilters({ isArchived: index === 1 ? true : undefined });
-          }}
+          onChange={(_e, index) =>
+            setFilters({ isArchived: index === 1 ? true : undefined })
+          }
         >
           <BlackTabs.Tab label="Active" />
           <BlackTabs.Tab label="Archived" />
