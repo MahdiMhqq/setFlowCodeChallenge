@@ -1,13 +1,11 @@
-import React from 'react'
+import React from "react";
 
 interface IHomeProps {
-    className?: string;
+  className?: string;
 }
 
-function Home({className = ""} : IHomeProps) {
-    return (
-        <div className={""}>Home</div>
-    )
+function Home({ className = "" }: IHomeProps) {
+  return <div className={""}>Home</div>;
 }
 
-export default Home
+export default Home;
